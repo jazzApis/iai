@@ -1,0 +1,40 @@
+/*!
+ * Ext JS
+ * Copyright(c) 2006-2012 Sencha Inc.
+ * licensing@sencha.com
+ * http://www.sencha.com/license
+ */
+body {
+    padding:20px;
+    padding-top:32px;
+}
+.x-body {
+    font-family:helvetica,tahoma,verdana,sans-serif;
+    font-size:13px;
+}
+p {
+    margin-bottom:15px;
+}
+h1 {
+    font-size:18px;
+    margin-bottom:20px;
+}
+h2 {
+    font-size:14px;
+    color:#333;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+.add	{background: url(../img/add.png) no-repeat !important;}
+.del	{background: url(../img/del.png) no-repeat !important;}
+.cog	{background: url(../img/cog.png) no-repeat !important;}
+.open	{background: url(../img/open.png) no-repeat !important;}
+.edit	{background: url(../img/edit.png) no-repeat !important;}
+.save	{background: url(../img/save.png) no-repeat !important;}
+.folder	{background: url(../img/folder.png) no-repeat !important;}
+.help	{background: url(../img/help.png) no-repeat !important;}
+.info	{background: url(../img/info.png) no-repeat !important;}
+.warn	{background: url(../img/warn.png) no-repeat !important;}
+.error	{background: url(../img/error.png) no-repeat !important;}
+.refresh{background: url(../img/refresh.png) no-repeat !important;}
