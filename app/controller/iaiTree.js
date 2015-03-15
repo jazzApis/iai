@@ -22,8 +22,9 @@ Ext.define ('app.controller.iaiTree', {
 			var node = tree.getSelected ();
 			var last = node.childNodes.length;
 			var rank = last ? node.getChildAt (last-1).get ('rank')+1 : 1;
+			var name = node.isRoot () ? 'element #' : node.get('text');
 
-			Ext.Msg.prompt (node.get('text')+' - nowy element', 'Nazwa:', function (btn, name) {
+			Ext.Msg.prompt (node.get('text')+' - nowy potomek', 'Nazwa:', function (btn, name) {
 				if (btn == 'ok') {
 					node.set ('leaf',0);
 					node.appendChild ({
@@ -34,7 +35,31 @@ Ext.define ('app.controller.iaiTree', {
 					node.expand ();
 					App.getStore ('iaiTree').sync ();
 				}
-			});
+			},this, false, name+rank);
+		}
+	}),
+				
+	// Akcja dodająca nowy element do drzewa
+	itemRename 	: new Ext.Action ({
+		iconCls	: 'edit',
+		text	: 'Zmień',
+		tooltip	: 'Zmień nazwę zaznaczonej pozycji',
+		disabled: true,
+		handler	: function (action, opts) {
+			
+			var tree = Ext.getCmp('iaiTreeView');
+			var node = tree.getSelected ();
+			var name = node.get('text');
+			
+			if (!node.get ('id'))
+				return;
+				
+			Ext.Msg.prompt (name, 'Zmiana nazwy:', function (btn, name) {
+				if (btn == 'ok') {
+					node.set ('text',name);
+					App.getStore ('iaiTree').sync ();
+				}
+			},this, false, name);
 		}
 	}),
 				
@@ -42,7 +67,7 @@ Ext.define ('app.controller.iaiTree', {
 	itemDel 	: new Ext.Action ({
 		iconCls	: 'del',
 		text	: 'Usuń',
-		tooltip	: 'Usuń zaznaczoną pozycje',
+		tooltip	: 'Usuń zaznaczoną pozycję',
 		disabled: true,
 		handler	: function (action, opts) {
 			var tree = Ext.getCmp('iaiTreeView');
@@ -59,13 +84,22 @@ Ext.define ('app.controller.iaiTree', {
 	// Akcja przeładowująca drzewo
 	treeRefresh 	: new Ext.Action ({
 		iconCls	: 'refresh',
-		text	: 'Odswież',
+		text	: 'Odśwież',
 		tooltip	: 'Ponownie wczytaj drzewo',
 		disabled: false,
 		handler	: function (action, opts) {
 			App.getStore ('iaiTree').load ();
 		}
 	}),
+	
+	updateControls	: function () {
+		
+		var tree = Ext.getCmp('iaiTreeView');
+		var node = tree.getSelected ();
+		this.itemAdd.setDisabled (false);
+		this.itemDel.setDisabled (node.get ('id')==0);
+		this.itemRename.setDisabled (node.get ('id')==0);
+	},
 
 	// Funkcja przeliczająca kolejność elementów gałęziach
 	// Wywoływana po przeniesieniu elementu	

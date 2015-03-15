@@ -15,6 +15,7 @@ Ext.define ('app.store.iaiTree', {
 	storeId	: 'iaiTree',
 	autoLoad: false,
 	autoSync: false,
+	
 	proxy	: {
 		type	: 'ajax',
 		api	: {
@@ -24,12 +25,14 @@ Ext.define ('app.store.iaiTree', {
 			destroy : 'remove'
 		}
 	},
+	
 	root	: {
 		id	: 0,
 		rank	: 0,
-		text	: 'Drzewo elementów',
+		text	: 'Korzeń drzewa IAI',
 		expanded: false
 	},
+	
 	listeners	: {
 		load	: function ( store, node, records, successful, eOpts ) {
 			if (!successful)

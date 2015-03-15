@@ -13,16 +13,16 @@ $GLOBALS[SYS_CODE] = array (
 	'db' => array (
 
 		// adres serwera bazy danych MySQL
-		'host'	=> 'localhost',
+		'host'	=> 'beta.apis.com.pl',
 
 		// nazwa bazy danych
-		'name'	=> 'desk',
+		'name'	=> 'iai',
 
 		// login do bazy danych
-		'user'	=> 'desk',
+		'user'	=> 'iai',
 
 		// hasło do bazy danych
-		'pass'	=> 'Deskt0p'
+		'pass'	=> 'Pa55word'
 
 	)
 );

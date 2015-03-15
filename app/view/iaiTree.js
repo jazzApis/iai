@@ -21,13 +21,19 @@ Ext.define ('app.view.iaiTree', {
 	height		: 400,
 	layout		: 'fit',
 	items		: [],
+	listeners	: {
+		show	: function (window,eOpts) {
+			this.treeView.getRootNode ().expand ();
+			//controller.treeRefresh.execute ();
+		}
+	},
 	initComponent	: function () {
 
 		var me = this;
-		var ctrl = App.getController('iaiTree');
 
 		me.callParent (arguments);
 
+		me.controller = App.getController('iaiTree');
 		me.treeView = new Ext.tree.Panel ({
 			
 			id		: 'iaiTreeView',
@@ -45,19 +51,23 @@ Ext.define ('app.view.iaiTree', {
 				
 			// toolbar
 			tbar		: [
-				ctrl.itemAdd,
-				ctrl.itemDel,
+				me.controller.itemAdd,
+				me.controller.itemDel,
+				'-',
+				me.controller.itemRename,
 				'->',
-				ctrl.treeRefresh
+				me.controller.treeRefresh
 			],
 			
 			// menu kontekstowe
 			popUp	: new Ext.menu.Menu ({
 				items   : [
-					ctrl.itemAdd,
-					ctrl.itemDel,
+					me.controller.itemAdd,
+					me.controller.itemDel,
 					'-',
-					ctrl.treeRefresh
+					me.controller.itemRename,
+					'-',
+					me.controller.treeRefresh
 				]
 			}),
 			
@@ -69,27 +79,28 @@ Ext.define ('app.view.iaiTree', {
 			listeners   : {
 
 				select  : function (model, rec, idx, opts) {
-					ctrl.itemAdd.setDisabled (false);
-					ctrl.itemDel.setDisabled (rec.get ('id')==0);
+					me.controller.updateControls ();
 				},
-
+				
+				itemdblclick	: function ( view, record, item, index, e, eOpts ) {
+					me.controller.itemRename.execute ();
+				},
+				
 				itemContextMenu : function (view, record, item, index, e, eOpts) {
 					e.preventDefault ();
 					if (this.popUp) this.popUp.showAt (e.getXY ());
 				},
 
 				itemmove  : function (node, oldParent, newParent, index, eOpts) {
-					node.set ('pi',newParent.get ('id'));
-					ctrl.rankRecalc (oldParent);
+					me.controller.rankRecalc (oldParent);
 					if (oldParent != newParent)
-						ctrl.rankRecalc (newParent);
+						me.controller.rankRecalc (newParent);
 					me.treeView.getStore ().sync ();
 				},
 
 				beforeitemmove  : function (node, oldParent, newParent, index, eOpts) {
 					return true;
-				},
-
+				}
 			}
 		});
 

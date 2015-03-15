@@ -1,31 +1,25 @@
-/*!
- * Ext JS
- * Copyright(c) 2006-2012 Sencha Inc.
- * licensing@sencha.com
- * http://www.sencha.com/license
+/**
+ * Prosty arkusz CSS zmieniający kilka podsatwowych elementów 
+ * i definiujący pare ikonek   
+ * ======================================================================= 
+ * @author	Jarosław Żbikowski 
+ * @version $Id$
+ * @copyright (c)2015 by jzbikowski@apis.com.pl
+ * @package iaiTree
  */
+
 body {
     padding:20px;
     padding-top:32px;
-}
-.x-body {
-    font-family:helvetica,tahoma,verdana,sans-serif;
-    font-size:13px;
 }
 p {
     margin-bottom:15px;
 }
 h1 {
     font-size:18px;
+    color:#399;
     margin-bottom:20px;
 }
-h2 {
-    font-size:14px;
-    color:#333;
-    font-weight:bold;
-    margin:10px 0;
-}
-
 .add	{background: url(../img/add.png) no-repeat !important;}
 .del	{background: url(../img/del.png) no-repeat !important;}
 .cog	{background: url(../img/cog.png) no-repeat !important;}
