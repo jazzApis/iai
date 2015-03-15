@@ -1,5 +1,4 @@
-# iai
-Zadanie testowe dla IAI
+# Zadanie testowe dla IAI
 
 Przykładowa aplikacja web'owa wyświetlająca okno z drzewem elementów, którymi moża manipulować:
 dopisywać, usuwać i przenosić metodą drag & drop.
@@ -11,9 +10,9 @@ Wymagania:
 * MySQL 5.x
 
 Instalacja:
-1. Zapisać pliki w folderze apacha
-2. W php/settings.php wpisać parametry bazy danych (host, nazwa, login i hasło) 
-3. Gotowe
+* Zapisać pliki w folderze apacha
+* W php/settings.php wpisać parametry bazy danych (host, nazwa, login i hasło) 
+* Gotowe
 
 Przy pierwszym uruchomieniu aplikacja sama tworzy potrzebną tabelę.
 Odpowiednie DDL są w pliku iaiTree.sql
