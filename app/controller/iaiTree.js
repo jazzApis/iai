@@ -18,19 +18,20 @@ Ext.define ('app.controller.iaiTree', {
 		disabled: true,
 		handler	: function (action, opts) {
 			
-			var tree = Ext.getCmp('iaiTreeView');
+			var ctrl = App.getController ('iaiTree');
+			var tree = App.getTreeView ();
 			var node = tree.getSelected ();
 			var last = node.childNodes.length;
 			var rank = last ? node.getChildAt (last-1).get ('rank')+1 : 1;
 			var name = node.isRoot () ? 'element #' : node.get('text');
 
-			Ext.Msg.prompt (node.get('text')+' - nowy potomek', 'Nazwa:', function (btn, name) {
-				if (btn == 'ok') {
+			Ext.Msg.prompt (node.get('text')+' - nowy potomek', 'Nazwa:', function (btn, text) {
+				if (btn == 'ok' && ctrl.nameIsCorrect (text,'')) {
 					node.set ('leaf',0);
 					node.appendChild ({
 						leaf	: 1,
 						rank	: rank,
-						text	: name
+						text	: text
 					});
 					node.expand ();
 					App.getStore ('iaiTree').sync ();
@@ -47,16 +48,17 @@ Ext.define ('app.controller.iaiTree', {
 		disabled: true,
 		handler	: function (action, opts) {
 			
-			var tree = Ext.getCmp('iaiTreeView');
+			var ctrl = App.getController ('iaiTree');
+			var tree = App.getTreeView ();
 			var node = tree.getSelected ();
 			var name = node.get('text');
 			
 			if (!node.get ('id'))
 				return;
 				
-			Ext.Msg.prompt (name, 'Zmiana nazwy:', function (btn, name) {
-				if (btn == 'ok') {
-					node.set ('text',name);
+			Ext.Msg.prompt (name, 'Zmiana nazwy:', function (btn, text) {
+				if (btn == 'ok' && ctrl.nameIsCorrect (text,name)) {
+					node.set ('text',text);
 					App.getStore ('iaiTree').sync ();
 				}
 			},this, false, name);
@@ -70,7 +72,8 @@ Ext.define ('app.controller.iaiTree', {
 		tooltip	: 'Usuń zaznaczoną pozycję',
 		disabled: true,
 		handler	: function (action, opts) {
-			var tree = Ext.getCmp('iaiTreeView');
+			
+			var tree = App.getTreeView ();
 			var node = tree.getSelected ();
 			Ext.Msg.confirm('Usuwanie','Na pewno usunąć '+node.get ('text'), function (btn) {
 				if (btn == 'yes') {
@@ -81,7 +84,7 @@ Ext.define ('app.controller.iaiTree', {
 		}
 	}),
 	
-	// Akcja przeładowująca drzewo
+	// Przeładowująca drzewa 
 	treeRefresh 	: new Ext.Action ({
 		iconCls	: 'refresh',
 		text	: 'Odśwież',
@@ -91,7 +94,23 @@ Ext.define ('app.controller.iaiTree', {
 			App.getStore ('iaiTree').load ();
 		}
 	}),
-	
+
+	// Sprawdzaniepoprawnosci i unikalnosci nazwy elementu
+	nameIsCorrect	: function (name, oldName) {
+		
+		if (name=='') {
+			Ext.MessageBox.alert ('Błąd','Elementy bez nazwy sa niedozwolone.');
+		} else if (name == oldName) {
+			// NOP - brak zmian 
+		} else if (App.getStore ('iaiTree').getRootNode ().findChild ('text', name, true)) {
+			Ext.MessageBox.alert ('Błąd','Element o nazwie "'+name+'" już istnieje.');
+		} else {
+			return true;
+		}
+		return false;
+	},
+		
+	// Aktualizuje status elementów
 	updateControls	: function () {
 		
 		var tree = Ext.getCmp('iaiTreeView');
@@ -101,9 +120,10 @@ Ext.define ('app.controller.iaiTree', {
 		this.itemRename.setDisabled (node.get ('id')==0);
 	},
 
-	// Funkcja przeliczająca kolejność elementów gałęziach
+	// Funkcja przeliczająca kolejność elementów w gałęziach
 	// Wywoływana po przeniesieniu elementu	
 	rankRecalc: function (node) {
+		
 		var rank = 0;
 		for (var i=0; i<node.childNodes.length; i++) {
 			var child = node.childNodes[i];
@@ -115,6 +135,7 @@ Ext.define ('app.controller.iaiTree', {
 		App.getStore ('iaiTree').sync ();
 	},
 
+	// Standardowa inicjacja komponentu
 	initComponent	: function () {
 		var me = this;
 		me.callParent (arguments);

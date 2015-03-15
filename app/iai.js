@@ -25,7 +25,15 @@ Ext.define ('app.iai', {
 		var me = this;
 		me.module = 'iai';
 		me.callParent ();
-
-		me.getView('iaiTree').show ();
+		me.call ('check', {}, function (result) {
+			if (result.success)
+				me.getView('iaiTree').show ();
+			else
+				Ext.MessageBox.alert ('Błąd',result.msg);
+		});
+	},
+	
+	getTreeView	: function () {
+		return Ext.getCmp ('iaiTreeView');
 	}
 });

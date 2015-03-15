@@ -19,7 +19,7 @@ class DB {
 		
 	/**
 	 * Konstruktor klasy DB
-	 * Zapisuje parametry i autpo,matycznie łaczy z bazą danych MySQL
+	 * Zapisuje parametry i automatycznie łaczy z bazą danych MySQL
 	 * @param $db(array) tabela zawierająca parametry bazy danych:
 	 * - host: adres serwera bazy danych 
 	 * - name: nazwa bazy danych 
@@ -65,6 +65,15 @@ class DB {
 	}
 	
 	/**
+	 * Zwraca połaczenie z bazą danych 
+	 * @return object: połączenie z bazą danych
+	 */
+	public function connected () {
+		
+		return $this->connection;
+	}
+	
+	/**
 	 * Substytucja placeholderów w treści kwerendy
 	 * @param $ph(array) tablica placeholderów (name => value)
 	 * @param $text(string) tekst zawierający placeholdery
@@ -98,8 +107,6 @@ class DB {
 		
 		return $text;
 	} 
-
-	
 	
 	/**
 	 * Wykonuje kwerendę i zwraca resultset
@@ -124,7 +131,7 @@ class DB {
 			$this->total = (int)$this->getResult ($rs);
 			$query .= " LIMIT $start,$limit";
 		}
-		
+
 		// Własciwe wywołanie kwerendy
 		$rs = mysql_query ($query, $this->connection);
 		
@@ -281,9 +288,7 @@ class DB {
 		$row = $this->selectRow ($query, $ph, $row);
 		return reset ($row);
 	}
-	
-	
-	
+
 	/**
 	 * Usuwanie  (DELETE) rekordy ze tabeli
 	 * @param $table(string) nazwa tabeli

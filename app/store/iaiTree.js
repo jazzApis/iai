@@ -19,7 +19,7 @@ Ext.define ('app.store.iaiTree', {
 	proxy	: {
 		type	: 'ajax',
 		api	: {
-			read    : 'load',
+			read    : 'tree',
 			create  : 'save',
 			update  : 'save',
 			destroy : 'remove'

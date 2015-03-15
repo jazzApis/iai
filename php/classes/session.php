@@ -52,7 +52,8 @@ class sessionClass {
 
 		// Inicjacja podstawowych parametyrów wywołania
 		$this->request	= array_merge ($_REQUEST,$items);
-		$this->setResult ('request',$this->request);
+		if (SYS_DEBUG)
+			$this->setResult ('request',$this->request);
 
 		// Inicjacja podstawowych parametyrów wywołania
 		$this->items	= $this->request['items'];

@@ -24,7 +24,6 @@ Ext.define ('app.view.iaiTree', {
 	listeners	: {
 		show	: function (window,eOpts) {
 			this.treeView.getRootNode ().expand ();
-			//controller.treeRefresh.execute ();
 		}
 	},
 	initComponent	: function () {

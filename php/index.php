@@ -8,7 +8,7 @@
  * @package desktop
  */
 
-/* poziom raportowania, http://pl.php.net/manual/pl/function.error-reporting.php
+/* poziom raportowania błedów
 error_reporting (E_ALL); 
 //*/error_reporting (E_ERROR); 
 
@@ -16,7 +16,7 @@ set_time_limit (30);
 
 ini_set ("display_errors","On");
 
-include_once ('config.php');
-include_once (CLASS_PATH.'session.php');
+require_once ('config.php');
+require_once (CLASS_PATH.'session.php');
 
 ?>

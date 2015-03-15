@@ -1,7 +1,6 @@
-	<?php
-
+<?php
 /**
- * Klasa kontrolera dokumentów (magazynowych)  
+ * Klasa kontrolera drzewa IAI  
  * ======================================================================= 
  * @author	Jarosław Żbikowski 
  * @version $Id$
@@ -12,19 +11,44 @@
 include_once (CLASS_PATH.'controller.php');
 class iaiController extends controllerClass {
 
+	// Tylko jeden model
 	protected $models = array (
 		'iai'
 	);
 	
 	/**
-	 * Zwraca drzewo (tree)
+	 * Sprawdza czy istnieje tabela modelu.
+	 * Jeśli jej nie ma próbuje ją utworzyć 
+	 * @param $options(array) parametry wywołania
 	 */
-	public function load ($options) {
+	public function check ($options) {
+		$table = $this->iai->tableExists ();
+		if (!$table) {
+			$this->setResult ('ddl',$this->iai->getCreateTable ());
+			$this->setSuccess (false, 'Tabela '.$table.' nie istnieje i nie mogę jej utworzyć');
+		}
+	}
+
+	/**
+	 * Zwraca (w resultset) drzewo elementów modelu IAI
+	 * @param $options(array) parametry wywołania
+	 */
+	public function tree ($options) {
 		$this->setResultTree ($this->iai->getTable ());
 	}
 
 	/**
-	 * Zapisuje zmiany do bazy danych
+	 * Zwraca (w resultset) tabelę elementów modelu IAI
+	 * @param $options(array) parametry wywołania
+	 */
+	public function store ($options) {
+		$this->setResultStore ($this->iai->getSelect ());
+	}
+
+	/**
+	 * Zapisuje zmienione lub nowe rekordy do modelu IAI
+	 * Zwraca (w resultsecie) tabelę z zapisanymi rekordami
+	 * @param $options(array) parametry wywołania
 	 */
 	public function save ($options) {
 		$ids = '';
@@ -34,8 +58,10 @@ class iaiController extends controllerClass {
 		$this->setResultStore ($this->iai->getSelect ('id in ('.$ids.')'),'children');
 	}
 
-	/** 
-	 * Usuwa obiekt z bazy danych
+	/**
+	 * Usuwa rekordy z  modelu IAI
+	 * Zwraca (w resultsecie) liste usuniętych identyfikatorów
+	 * @param $options(array) parametry wywołania
 	 */
 	public function remove ($options) {
 		$ids = '';

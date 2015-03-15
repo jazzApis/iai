@@ -76,5 +76,20 @@ Ext.define ('app.core.App', {
 
 	callMethod	: function (action) {
 		return this.url+'php/index.php?module='+this.module+'&action='+action;
+	}, 
+	
+	call : function (action, params, callback) {
+		
+		Ext.Ajax.request ({
+			scope		: this,
+			url			: this.callMethod(action),
+			params		: params,
+			method		: 'POST',
+			timeout 	: 12000,
+			callback	: function (opts, success, response) {
+				var result = response && response.responseText && Ext.decode (response.responseText);
+				callback (result);
+			}
+		});
 	}
 });

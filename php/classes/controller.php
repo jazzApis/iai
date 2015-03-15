@@ -12,11 +12,11 @@
 include_once (CLASS_PATH.'mvc.php');
 class controllerClass extends mvcClass {
 
+	// Lista modeli controlera
 	protected $models = array ();
 	
 	/**
-	 * Konstruktor klasy
-	 * @param	name string nazwa modułu
+	 * Konstruktor klasy, inicjuje wszystkie modele 
 	 * @return void
 	 */	
 	public function __construct () {
@@ -30,6 +30,12 @@ class controllerClass extends mvcClass {
 		}
 	}
 
+	/**
+	 * Wykonuje kwerendę i zapisuje wynik 
+	 * @param $query(string) kwerenda SQL
+	 * @param $name(string) opcjonalna nazwa sekcji (domyślnie items)
+	 * @return void
+	 */
 	protected function setResultStore ($query, $name='') {
 		
 		if (is_array($query)) {
