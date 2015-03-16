@@ -9,10 +9,14 @@
  */
 
 Ext.define ('app.model.iaiTree', {
+
 	extend: 'Ext.data.Model',
-	fields: 
-		[{ name: 'id'   , defaultValue: 0    , type: 'int' }
-		,{ name: 'rank' , defaultValue: 0    , type: 'int' }
-		,{ name: 'text' }
-	]
+
+	fields: [{
+		name: 'id'   , defaultValue: 0    , type: 'int' 
+	}, { 
+		name: 'rank' , defaultValue: 0    , type: 'int' 
+	}, { 
+		name: 'text' 
+	}]
 });

@@ -12,9 +12,9 @@
 Ext.define ('app.view.iaiTree', {
 
 	extend		: 'Ext.Window',
-	id			: 'iaiTreePanel',
+	id		: 'iaiTreePanel',
 	title		: 'Zadanie testowe',
-	useQuickTips: true,
+	useQuickTips	: true,
 	maximizable	: true,
 	closable	: false,
 	width		: 450,

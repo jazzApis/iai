@@ -34,7 +34,7 @@ Ext.define ('app.controller.iaiTree', {
 						text	: text
 					});
 					node.expand ();
-					App.getStore ('iaiTree').sync ();
+					node.getOwnerTree ().getStore ().sync ();
 				}
 			},this, false, name+rank);
 		}
@@ -59,7 +59,7 @@ Ext.define ('app.controller.iaiTree', {
 			Ext.Msg.prompt (name, 'Zmiana nazwy:', function (btn, text) {
 				if (btn == 'ok' && ctrl.nameIsCorrect (text,name)) {
 					node.set ('text',text);
-					App.getStore ('iaiTree').sync ();
+					node.getOwnerTree ().getStore ().sync ();
 				}
 			},this, false, name);
 		}
@@ -78,7 +78,7 @@ Ext.define ('app.controller.iaiTree', {
 			Ext.Msg.confirm('Usuwanie','Na pewno usunąć '+node.get ('text'), function (btn) {
 				if (btn == 'yes') {
 					node.remove ();
-					App.getStore ('iaiTree').sync ();
+					node.getOwnerTree ().getStore ().sync ();
 				}
 			});
 		}
@@ -132,7 +132,7 @@ Ext.define ('app.controller.iaiTree', {
 				child.set ('rank',rank);
 			}
 		}
-		App.getStore ('iaiTree').sync ();
+		node.getOwnerTree ().getStore ().sync ();
 	},
 
 	// Standardowa inicjacja komponentu
